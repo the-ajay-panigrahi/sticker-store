@@ -59,6 +59,8 @@ header {
 .header-content h1 {
   background: #030615;
   color: white;
+  padding: 0.2rem 1rem;
+  border-radius: 0.5rem;
 }
 
 .header-content a {
@@ -447,6 +449,10 @@ footer .links-container > div {
 @media (min-width: 768px) {
   header {
     position: fixed;
+  }
+
+  .page-container {
+    padding: 16rem 0 8rem;
   }
 
   .sticker-container {
