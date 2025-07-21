@@ -47,8 +47,8 @@ export default function RootLayout({ children }) {
                 </div>
                 <div>
                   <h3>Support</h3>
-                  <Link href={'/contact'}>Contact</Link>
-                  <Link href={'/faq'}>FAQs</Link>
+                  <Link href={'/'}>Contact</Link>
+                  <Link href={'/'}>FAQs</Link>
                 </div>
               </div>
 
