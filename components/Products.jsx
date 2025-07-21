@@ -8,7 +8,6 @@ export default function Products({ planner, stickers }) {
   const [portalImage, setPortalImage] = useState(null);
 
   const { handleIncrementProduct, cart } = useProducts();
-  console.log(cart);
 
   if (!stickers.length || !planner) {
     return null;

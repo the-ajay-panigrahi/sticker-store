@@ -1,11 +1,13 @@
 "use client"
 import { useProducts } from "@/context/ProductContext"
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
+    const router = useRouter()
     const { cart, handleIncrementProduct } = useProducts()
 
-    // Challenge item - calculate the total cost of items in cart
+    // calculate the total cost of items in cart
     const total = Object.keys(cart).reduce((acc, curr) => {
         // use the reduce function to interative cumulate a value
 
@@ -24,6 +26,32 @@ export default function CartPage() {
         // 5. return the sum which then becomes the accumlated value for the next iteration
         return sum
     }, 0)
+
+    async function createCheckout() {
+        try {
+            const baseURL = process.env.NEXT_PUBLIC_BASE_URL
+            const lineItems = Object.keys(cart).map((item, itemIndex) => {
+                return {
+                    price: item,
+                    quantity: cart[item].quantity
+                }
+            })
+
+            const response = await fetch(baseURL + '/api/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({ lineItems })
+            })
+            const data = await response.json()
+            if (response.ok) {
+                router.push(data.url)
+            }
+        } catch (err) {
+            console.log('Error creating checkout', err.message)
+        }
+    }
 
 
     return <section className="cart-section">
@@ -60,11 +88,12 @@ export default function CartPage() {
                 )
             })}
         </div>
+        <h2 style={{ textAlign: 'center', width: "100%", marginBlock: "1rem" }}>Total: ₹{total / 100}</h2>
         <div className="checkout-container">
             <Link href={'/'}>
                 <button>&larr; Continue shopping</button>
             </Link>
-            <button>Checkout &rarr;</button>
+            <button onClick={createCheckout}>Checkout &rarr;</button>
         </div>
-    </section>
+    </section >
 } 

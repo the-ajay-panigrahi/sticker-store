@@ -9,7 +9,6 @@ export default function Cart() {
     const sum = acc + parseInt(numProduct);
     return sum;
   }, 0);
-  console.log(numProducts);
 
   return (
     <div>
